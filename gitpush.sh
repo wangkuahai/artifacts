@@ -8,6 +8,6 @@ if (($# > 0)); then
 fi
 
 git add . 
-git commit -m $message
+git commit -m "$message"
 git push
 
