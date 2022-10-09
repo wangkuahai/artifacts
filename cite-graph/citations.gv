@@ -1,0 +1,111 @@
+digraph citations {
+	graph [compound=true]
+	node [color=lightblue2]
+	0 [label="Fast detection of memory leaks and access errors"]
+	1 [label="Using Valgrind to detect undefined value errors with bit-precision"]
+	2 [label=DieHard]
+	3 [label="How to shadow every byte of memory used by a program"]
+	4 [label=Valgrind]
+	5 [label=DieHarder]
+	6 [label="Practical memory checking with Dr. Memory"]
+	7 [label="Practical low-overhead enforcement of memory safety for c programs"]
+	8 [label="Light-weight bounds checking"]
+	9 [label=AddressSanitizer fillcolor=red shape=box style=filled]
+	10 [label=SoK]
+	11 [label="An Optimized Memory Monitoring for Runtime Assertion Checking of C Programs"]
+	12 [label=WatchdogLite]
+	13 [label="Code-pointer integrity"]
+	14 [label="Preventing Use-after-free with Dangling Pointers Nullification"]
+	15 [label=MemorySanitizer]
+	16 [label="Missing the Point(er)"]
+	17 [label="Everything You Want to Know About Pointer-Based Checking"]
+	18 [label="Coverage-based Greybox Fuzzing as Markov Chain"]
+	19 [label="Directed Greybox Fuzzing"]
+	20 [label=BOGO]
+	21 [label=FRAMER]
+	0 -> 1
+	0 -> 2
+	0 -> 3
+	0 -> 4
+	0 -> 6
+	0 -> 7
+	0 -> 9
+	0 -> 14
+	0 -> 17
+	1 -> 2
+	1 -> 3
+	1 -> 4
+	1 -> 6
+	1 -> 7
+	1 -> 9
+	1 -> 12
+	1 -> 15
+	2 -> 5
+	2 -> 7
+	2 -> 8
+	2 -> 9
+	2 -> 10
+	2 -> 12
+	2 -> 14
+	2 -> 15
+	3 -> 4
+	3 -> 6
+	3 -> 7
+	3 -> 9
+	3 -> 11
+	3 -> 12
+	3 -> 17
+	4 -> 6
+	4 -> 7
+	4 -> 8
+	4 -> 9
+	4 -> 10
+	4 -> 12
+	4 -> 14
+	4 -> 15
+	4 -> 16
+	4 -> 17
+	4 -> 20
+	5 -> 7
+	5 -> 9
+	5 -> 10
+	5 -> 12
+	5 -> 14
+	5 -> 15
+	6 -> 9
+	6 -> 15
+	7 -> 9
+	7 -> 12
+	7 -> 17
+	7 -> 20
+	8 -> 9
+	8 -> 13
+	9 -> 10
+	9 -> 11
+	9 -> 12
+	9 -> 13
+	9 -> 14
+	9 -> 15
+	9 -> 16
+	9 -> 17
+	9 -> 18
+	9 -> 19
+	9 -> 20
+	9 -> 21
+	10 -> 12
+	10 -> 13
+	10 -> 16
+	10 -> 17
+	10 -> 20
+	12 -> 17
+	12 -> 20
+	13 -> 16
+	13 -> 17
+	14 -> 17
+	14 -> 20
+	15 -> 19
+	16 -> 17
+	17 -> 20
+	17 -> 21
+	18 -> 19
+}
