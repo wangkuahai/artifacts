@@ -1,0 +1,15 @@
+git_branch()
+{
+   branch=`git rev-parse --abbrev-ref HEAD 2>/dev/null`
+   if [ "${branch}" != "" ]
+   then
+       if [ "${branch}" = "(no branch)" ]
+       then
+           branch="(`git rev-parse --short HEAD`...)"
+       fi
+       echo "($branch)"
+   fi
+}
+
+PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W$(git_branch)\$ '
+PS1='-> \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;32m\]$(git_branch)\[\033[00m\]\$ '
