@@ -24,6 +24,8 @@
 extern int errno;
 #include "dis-inst.h"
 
+#define MAX_CODE_SIZE 20
+
 typedef struct Section_
 {
     char *name_ref;
@@ -126,6 +128,12 @@ int getSection(Elf *elf, char *sec_name, Section *sec)
     return 0;
 }
 
+bool inSection(uint64_t target, Section *sec)
+{
+    return target >= sec->start_vaddr &&
+           target <= (sec->start_vaddr + sec->size);
+}
+
 Elf *open_elf(char *path, int fd)
 {
     Elf *e;
@@ -167,39 +175,48 @@ int main(int argc, char **argv)
         fprintf(stderr, "Value of errno: %d\n", errno);
         fprintf(stderr, "Error mapping dyninstInst: %s\n", strerror(errno));
     }
-    
+
     /* read (perf script --itrace=bw) from stdin */
-    FILE* out=fopen("out.bw","w+");
-    if(out==NULL){
-        fprintf(stderr,"open failed. \n");
+    FILE *out = fopen("out.bw", "w+");
+    if (out == NULL)
+    {
+        fprintf(stderr, "open failed. \n");
         exit(-1);
     }
-    
+
     char buf[1024];
     char temp_buf[1024];
     char append[1024];
-    while(fgets(buf,sizeof(buf),stdin)!=NULL){
-        strcpy(temp_buf,buf);
-        int token_cnt=0;
-        char *p=strtok(buf," ");
-        if(!strcmp(p,"branch:")){
-            p=strtok(NULL," ");
+    char *p, *inst_str;
+    int token_cnt;
+    while (fgets(buf, sizeof(buf), stdin) != NULL)
+    {
+        strcpy(temp_buf, buf);
+        token_cnt = 0;
+        p = strtok(buf, " ");
+        if (!strcmp(p, "branch:"))
+        {
+            p = strtok(NULL, " ");
 
-            uint64_t ip=strtoull(p,NULL,)
-        }
-        
-        while(p != NULL){
-            if(!strcmp(p,"branch:")){
+            uint64_t ip = strtoull(p, NULL, 16);
+            uint8_t *code_addr;
 
+            if (inSection(ip, &dyninstInst))
+            {
+                code_addr = (uint8_t *)dyninstInst_mem + (ip - dyninstInst.start_vaddr);
             }
-            else{
-
+            else
+            {
+                continue;
             }
 
-            p=strtok(buf," ");
+            inst_str = dis_inst(code_addr, 20, ip);
+            fputs(strcat(temp_buf, inst_str), out);
         }
-
-        fputs(buf,out);
+        else // ptwrite:
+        {
+            fputs(temp_buf, out);
+        }
     }
 
     fclose(out);
